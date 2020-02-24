@@ -1,0 +1,7 @@
+load("/Users/uniquechong/Dropbox (Personal)/FSU_research/R21 Grant Application/MWAS/resAna/res_signle_tissue_AD_GWAX_1000G_SPrediXcan.rds")
+tmp = readRDS("/Users/uniquechong/Dropbox (Personal)/FSU_research/R21 Grant Application/MWAS/resAna/res_signle_tissue_AD_GWAX_1000G_SPrediXcan.rds")
+dim(tmp)
+tmp[1:4,]
+sum(is.na(tmp))
+colSums(tmp<0.05)
+colSums(tmp<0.01)
