@@ -4,5 +4,5 @@ CMO is a gene-level association test and can identify many significant and novel
 
 In this repo, we provide the following sources.
 
-* CMO: the software for running CMO test
+* CMO: the software for running CMO test (under development)
 * Codes: all sources codes for replicating the results present in the manuscript.
