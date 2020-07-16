@@ -25,13 +25,13 @@ In this repo, we provide the following sources.
 
 ## <a name="Installation"></a>Installation
 
-- Download and unpackage the CMO package from github
+- Download and unpackage the CMO package from github. Download through [this link](https://github.com/ChongWuLab/CMO/releases/tag/v1.0) or by the following commands:
 
   ~~~
-  
+  wget https://github.com/ChongWuLab/CMO/archive/v1.0.zip
+  unzip v1.0.zip
+  cd CMO-1.0
   ~~~
-
-  
 
 - Install required R packages. Lanuch R and type the following commands:
 
