@@ -4,7 +4,7 @@ chr.id <- as.numeric(slurm_arrayid)
 
 # set working dir
 dat.dir <- "/gpfs/research/chongwu/shared/summary_statistics/AD/"
-work.dir <- "/gpfs/research/chongwu/Chong/MWAS"
+work.dir <- getwd()
 
 setwd(work.dir)
 
@@ -22,17 +22,18 @@ source("mwas_support.R")
 suppressMessages(library("plink2R"))
 suppressMessages(library("optparse"))
 
+option_list = list(
+make_option("--sumstats", action="store", default=NA, type='character',
+help="summary statistics (must have SNP and Z column headers; support rds and txt format) [required]"),
+make_option("--out", action="store", default=NA, type='character',
+help="Path to output files [required]"),
+make_option("--chr_id", action="store", default=-1, type='character',
+help="The chromosome ID. We recommend parallel the computations by chromosomes")
+)
 
-args <- commandArgs(TRUE)
-job <- (eval(parse(text = args[[1]])))
-pfx <- (as.character(args[[2]]))
-pheno <- (as.character(args[[3]])) #IGAP1;AD_Jansene
 
-job = chr.id
+opt = parse_args(OptionParser(option_list=option_list))
 
-#job <- 19
-#pfx <- "test"
-#pheno <- "AD_Jansene"
 
 gene = readRDS("processed_gene_CpG_mapped_inf.rds") #17296 genes
 gene$Feature = "GeneBody"
@@ -62,17 +63,31 @@ enhancer = enhancer[order(enhancer[, 1], enhancer[, 3], enhancer[, 4]),]
 wgtlist = rbind(enhancer, gene)
 wgtlist = wgtlist[order(wgtlist[, 1], wgtlist[, 3], wgtlist[, 4]),]
 
-sumstats = paste(dat.dir, pheno, ".rds", sep = "")
+
 
 outd <- paste(work.dir, "/res/", pfx, "_", pheno, sep = "")
 system(paste("mkdir -p ", outd, sep = ""))
 
-opt <- list(
-sumstats = sumstats,
-weights_dir = paste(work.dir, "/WEIGHTS/", sep = "")
-)
 
-wgtlist <- wgtlist[wgtlist[, 1] == job,]
+if(grepl(".rds",opt$sumstats)) {
+    sumstat.orgin = readRDS(opt$sumstats)
+} else if (grepl(".txt",opt$sumstats)) {
+    sumstat.orgin = fread(opt$sumstats)
+    sumstat.orgin = as.data.frame(sumstat.orgin)
+} else {
+    sumstat.orgin = fread(opt$sumstats)
+    sumstat.orgin = as.data.frame(sumstat.orgin)
+    warning("We try to read GWAS summary data other than txt and rds format. The data may not read properly")
+}
+
+if(opt$chr_id<=22 & opt$chr_id>=1) {
+    job = opt$chr_id
+    wgtlist <- wgtlist[wgtlist[, 1] == job,]
+    sumstat.orgin <- sumstat.orgin[sumstat.orgin$CHR == job,]
+
+} else if( opt$chr_id!= -1) {
+    warning("Chromosomes ID must between 1 and 22. We ignore this argument and run the analyses for all the genes.")
+}
 used.gene <- unique(wgtlist$geneID)
 
 
@@ -80,10 +95,6 @@ used.gene <- unique(wgtlist$geneID)
 #wgtlist0 = wgtlist[wgtlist[,"geneID"]=="APOE",]
 #wgt.file <- paste(opt$weights_dir, wgtlist0$weights_dir[w], sep = "")
 #load(wgt.file)
-
-
-sumstat.orgin <- readRDS(opt$sumstats)
-sumstat.orgin <- sumstat.orgin[sumstat.orgin$CHR == job,]
 gwas_snp = sumstat.orgin[, "SNP"] # rs ID gwas SNP
 
 a1 = sumstat.orgin[, "A1"]
@@ -128,9 +139,9 @@ rm(NET)
 rm(NET_all)
 
 
-out.res <- as.data.frame(matrix(NA, length(used.gene), 32))
+out.res <- as.data.frame(matrix(NA, length(used.gene), 27))
 colnames(out.res) <- c("CHR", "geneID", "ensembl", "P0", "P1", "n_enhancer", "best_SUM_Feature", "best_n_SNP", "best_Z_score", "best_p-SUM", "worst_SUM_Feature", "worst_n_SNP", "worst_Z_score", "worst_p-SUM", "best_ACAT_Feature", "best_nSNP_ACAT", "best_p_ACAT", "worst_ACAT_Feature", "worst_nSNP_ACAT", "worst_p_ACAT", "n_enhancer_CpG", "n_gene_CpG", "n_enhancer_SNP"
-, "n_gene_SNP", "n_total_SNP", "cross_SUM", "gene_SUM", "enhancer_SUM","cross_CMO", "gene_CMO", "enhancer_CMO", "runtime(s)")
+, "n_gene_SNP", "n_total_SNP", "CMO", "runtime(s)")
 
 res.single <- NULL
 
@@ -230,15 +241,13 @@ for (gene.indx in 1:length(used.gene)) {
     out.res[gene.indx, 19:20] <- tmp[c("n_infoSNP", "aSumSSUACAT")]
 
     out.res[gene.indx, 21:25] = c(n.enhancer.cpg, n.gene.cpg, n.enhancer.snp, n.gene.snp, n.snp)
-    out.res[gene.indx, 26:28] = c(cross_SUM_p, gene_SUM_p, enhancer_SUM_p)
+    out.res[gene.indx, 26] = cross_ACAT_p
     
-    out.res[gene.indx, 29:31] = c(cross_ACAT_p, gene_ACAT_p, enhancer_ACAT_p)
-
     cat("Finish Gene",gene.indx,"\t")
     
     end.time <- proc.time()[3]
     run.time <- (end.time - start.time)
-    out.res[gene.indx, 32] <- run.time
+    out.res[gene.indx, 27] <- run.time
 
   }, error = function(e) {
     cat("ERROR :", conditionMessage(e), "\n")
