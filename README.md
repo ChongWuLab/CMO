@@ -16,14 +16,14 @@ In this repo, we provide the following sources.
 
 ## Outline
 
-1. [Installation](##Installation)
-2. [Typical analysis and output](##Typical analysis and output)
-3. [Command-line parameters](Command-line parameters)
-4. [FAQ](##FAQ)
+1. [Installation](#Installation)
+2. [Typical analysis and output](#Analysis)
+3. [Command-line parameters](#Command)
+4. [FAQ](#FAQ)
 
 
 
-## Installation
+## <a name="Installation"></a>Installation
 
 - Download and unpackage the CMO package from github
 
@@ -39,7 +39,7 @@ In this repo, we provide the following sources.
   install.packages(c('Rcpp','RcppArmadillo','bigmemory','mvtnorm','data.table','BEDMatrix'))
   ~~~
 
-## Typical analysis and output
+## <a name="Analysis"></a>Typical analysis and output
 
 The CMO analysis takes pre-computed DNA methylation prediction models (included in the CMO package), enhancer-promoter interactions (included in the CMO package), and GWAS summary data to estimate the association between a gene and the trait of interest. We will use the [IGAP Alzheimer's summary data](http://web.pasteur-lille.fr/en/recherche/u744/igap/igap_download.php) (Lambert et al. 2013) as an example to illustrate how to use our methods. This example assumes you have set up the required environment and data, as illustrated in the previous section.
 
@@ -90,7 +90,7 @@ The results are stored in a user-defined output file. For illustration, we expla
 
 **Note:** We only store the results for genes with external weights. The genes without external weights will be ignored in the output file. We also save the results for standard MWAS. However, we only run MWAS for the CpG sites that are linked to genes. 
 
-## Command-line parameters
+## <a name="Command"></a>Command-line parameters
 
 ### IWAS.R
 
@@ -102,7 +102,7 @@ The results are stored in a user-defined output file. For illustration, we expla
 
 
 
-## FAQ
+## <a name="Analysis"></a>FAQ
 
 If you have questions, please submit a issue. We will summarize commonly asked questions here. 
 
