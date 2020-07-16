@@ -1,6 +1,6 @@
 # Cross Methylome Omnibus (CMO) test
 
-CMO is a gene-level association test and can identify many significant and novel genes that have been ignored by competing methods. Specifically,  CMO integrates genetically regulated DNAm in enhancers, promoters, and the gene body to identify additional disease-associated genes. Please cite the following manuscript for CMO analysis:
+CMO is a gene-level association test that can identify many significant and novel genes ignored by many benchmark methods.  Specifically,  CMO integrates genetically regulated DNAm in enhancers, promoters, and the gene body to identify additional disease-associated genes. Please cite the following manuscript for CMO analysis:
 
 ```
 Wu et al. A gene-level methylome-wide association analysis identifies novel Alzheimer's disease genes. bioRxiv. doi:https://doi.org/10.1101/2020.07.13.201376.
@@ -10,7 +10,7 @@ In this repo, we provide the following sources.
 
 * CMO: the software for running CMO test (beta version; a more updated version will be uploaded when the manuscript has been accepted.)
 
-* Codes: all sources codes for replicating the results present in the manuscript.
+* Codes: all source codes for replicating the results present in the manuscript.
 
   
 
@@ -54,7 +54,7 @@ At a minimum, we need a summary rds file with a header row containing the follow
 
 Additional columns are allowed but will be ignored. We recommend removing the additional columns before analysis to save space. 
 
-**Note:** The performance of CMO depends on the density of summary-level data. We highly recommend running CMO with raw summary-level data. Pre-process step such as pruning and restricting to top SNPs may harm the performance.
+**Note:** The performance of CMO depends on the density of summary-level data. We highly recommend running CMO with raw summary-level data. Pre-process steps such as pruning and restricting to top SNPs may harm the performance.
 
 ### Performing the CMO
 
@@ -64,6 +64,7 @@ After we prepared the data, we can run CMO via the following single line.
 Rscript CMO_main.R \
 --sumstats ./Example/IGAP_chr22.txt \
 --out ./Example/example_res.txt \
+--CMO_dir /gpfs/research/chongwu/Chong/CMO/
 --chr_id 22
 ```
 
@@ -98,13 +99,14 @@ The results are stored in a user-defined output file. For illustration, we expla
 | ---------- | ------------------------------------------------------------ | -------- |
 | --sumstats | ummary statistics (rds file and must have SNP and Z column headers) | Required |
 | --out      | Path to output file                                          | Required |
-| --chr_id   | Gene sets we want to analyze, currently only gene sets from a single chromosome are supported | Optional |
+| CMO_dir    | Path to the CMO package                                      | Required |
+| --chr_id   | The chromosome ID. We recommend parallel the computations by chromosomes | Optional |
 
 
 
 ## <a name="Analysis"></a>FAQ
 
-If you have questions, please submit a issue. We will summarize commonly asked questions here. 
+If you have questions, please submit an issue. We will summarize commonly asked questions here. 
 
 
 

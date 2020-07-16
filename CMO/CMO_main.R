@@ -3,10 +3,6 @@ slurm_arrayid <- Sys.getenv('SLURM_ARRAY_TASK_ID')
 chr.id <- as.numeric(slurm_arrayid)
 
 # set working dir
-dat.dir <- "/gpfs/research/chongwu/shared/summary_statistics/AD/"
-work.dir <- getwd()
-
-setwd(work.dir)
 
 library(Rcpp)
 library(RcppArmadillo)
@@ -27,12 +23,16 @@ make_option("--sumstats", action="store", default=NA, type='character',
 help="summary statistics (must have SNP and Z column headers; support rds and txt format) [required]"),
 make_option("--out", action="store", default=NA, type='character',
 help="Path to output files [required]"),
+make_option("--CMO_dir", action="store", default=NA, type='character',
+help="Path to the CMO package [required]"),
 make_option("--chr_id", action="store", default=-1, type='character',
 help="The chromosome ID. We recommend parallel the computations by chromosomes")
 )
 
 
 opt = parse_args(OptionParser(option_list=option_list))
+
+setwd(opt$CMO_dir)
 
 
 gene = readRDS("processed_gene_CpG_mapped_inf.rds") #17296 genes
@@ -103,7 +103,7 @@ a2 = sumstat.orgin[, "A2"]
 keep = !((a1 == "A" & a2 == "T") | (a1 == "T" & a2 == "A") | (a1 == "C" & a2 == "G") | (a1 == "G" & a2 == "C"))
 sumstat.orgin = sumstat.orgin[keep,]
 
-load("/gpfs/research/chongwu/Chong/MWAS/WEIGHTS/NET_Methylation_download.RData") # loads: LD, NET, info
+load(paste(opt$CMO_dir,"/WEIGHTS/NET_Methylation_download.RData",sep="")) # loads: LD, NET, info
 
 NET_all = do.call(rbind, NET) # make matrix from list NET
 NET_all = NET_all[which(!duplicated(NET_all[, 2])),] # only keep unique SNPs
