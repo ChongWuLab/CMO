@@ -23,7 +23,7 @@ In this repo, we provide the following sources.
 
 ## <a name="Installation"></a>Installation
 
-- Download and unpackage the CMO package from github. Download through [this link](https://github.com/ChongWuLab/CMO/releases/tag/v1.0) or by the following commands:
+- Download and unpackage the CMO package from GitHub. Download through [this link](https://github.com/ChongWuLab/CMO/releases/tag/v1.0) or by the following commands:
 
   ~~~
   wget https://github.com/ChongWuLab/CMO/archive/v1.0.zip
@@ -31,7 +31,7 @@ In this repo, we provide the following sources.
   cd CMO-1.0
   ~~~
 
-- Download the [constructed weights](); unzip it and put into the CMO directory. (The link will be available after the manuscript has been accepted.)
+- Download and unzip the [constructed weights](). (The link will be available after the manuscript has been accepted.)
 
 
 ## <a name="Analysis"></a>Typical analysis and output
@@ -40,7 +40,7 @@ The CMO analysis takes pre-computed DNA methylation prediction models (included 
 
 ### Input: GWAS summary statistics
 
-We write a wrap code and try to support all publically available GWAS summary data. Please revise the column names to the commonly used ones  (such as BETA, SE, Z, A1, A2, SNP) if you meet some problems. We also calculate Z score vectors automatically if the raw GWAS summary data failed to included it. 
+We write a wrapping code and try to support all publically available GWAS summary data. Please revise the column names to the commonly used ones  (such as BETA, SE, Z, A1, A2, SNP) if you meet some problems. We also calculate Z score vectors automatically if the raw GWAS summary data failed to include it. 
 
 **Note:** The performance of CMO depends on the density of summary-level data. We highly recommend running CMO with raw summary-level data. Pre-process steps such as pruning and restricting to top SNPs may harm the performance.
 
@@ -56,7 +56,7 @@ Rscript CMO.R \
 --chr_id 22
 ```
 
-This should take around one or two minutes, and we will see some intermediate steps on the screen. If everything works, the results will be saved into ./Example/. Birefly, we save the results of CMO (res_CMO_CHR22.txt) and individual MWAS results (res_MWAS_CHR22.txt).
+This should take around one or two minutes, and we will see some intermediate steps on the screen. If everything works, the results will be saved into ./Example/. Briefly, we save the results of CMO (res_CMO_CHR22.txt) and individual MWAS results (res_MWAS_CHR22.txt).
 
 
 
@@ -84,10 +84,10 @@ The results are stored in a user-defined output file. For illustration, we expla
 
 | Flag          | Usage                                                        | Default  |
 | :------------ | ------------------------------------------------------------ | -------- |
-| --sumstats    | ummary statistics (rds file and must have SNP and Z column headers) | Required |
+| --sumstats    | Summary statistics (rds file and must have SNP and Z column headers) | Required |
 | --out         | Path to output directory                                     | Required |
 | --weights_dir | The weights directory                                        | Required |
-| --chr_id      | The chromosome ID. We recommend parallel the computations by chromosomes | Optional |
+| --chr_id      | The chromosome ID. We recommend parallelling the computations by chromosomes | Optional |
 
 ## <a name="Analysis"></a>FAQ
 
