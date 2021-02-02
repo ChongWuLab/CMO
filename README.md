@@ -2,7 +2,7 @@
 
 CMO is a gene-level association test that can identify many significant and novel genes ignored by many benchmark methods.  Specifically,  CMO integrates genetically regulated DNAm in enhancers, promoters, and the gene body to identify additional disease-associated genes. Please cite the following manuscript for CMO analysis:
 
->  Wu et al. A gene-level methylome-wide association analysis identifies novel Alzheimer's disease genes. Bioinformatics (Accepted) doi:https://doi.org/10.1101/2020.07.13.201376. 
+>  Wu et al. A gene-level methylome-wide association analysis identifies novel Alzheimer's disease genes. Bioinformatics doi:https://doi.org/10.1093/bioinformatics/btab045
 
 In this repo, we provide the following sources.
 
