@@ -26,7 +26,12 @@ help="The chromosome ID. We recommend parallel the computations by chromosomes [
 
 opt = parse_args(OptionParser(option_list=option_list))
 
-#opt = list(sumstats = "/gpfs/research/chongwu/Chong/MWAS/CMO/ANA_B2_V4_Eur.txt",out = "/gpfs/research/chongwu/Chong/MWAS/CMO/COVID19_B2_ALL", weights_dir = "/gpfs/research/chongwu/Chong/MWAS/WEIGHTS/",chr_id =22)
+cat("Start runining CMO for chromosome ",opt$chr_id,"\n")
+cat("Input summary data: ",opt$sumstats,"\n")
+
+opt$chr_id = as.numeric(opt$chr_id)
+#opt = list(sumstats = "/gpfs/research/chongwu/shared/summary_statistics/COVID19/release5/processed/ANA_C2_eur_V5.txt",out = "/gpfs/research/chongwu/Chong/Application/COVID19/C2_eur_V5", weights_dir = "/gpfs/research/chongwu/Chong/MWAS/WEIGHTS/",chr_id =7)
+
 
 gene = readRDS("processed_gene_CpG_mapped_inf.rds") #17296 genes
 gene$Feature = "GeneBody"
@@ -55,7 +60,7 @@ enhancer = enhancer[order(enhancer[, 1], enhancer[, 3], enhancer[, 4]),]
 wgtlist = rbind(enhancer, gene)
 wgtlist = wgtlist[order(wgtlist[, 1], wgtlist[, 3], wgtlist[, 4]),]
 
-
+cat("Incorporate enhancer-promoter interactions\n")
 
 outd <- opt$out
 system(paste("mkdir -p ", outd, sep = ""))
@@ -203,6 +208,7 @@ keep = keep & keep2
 sumstat.orgin = sumstat.orgin[keep,]
 gwas_snp = sumstat.orgin[, "SNP"] # rs ID gwas SNP
 
+cat("Read the GWAS summary data\n")
 
 load(paste(opt$weights_dir,"/NET_Methylation_download.RData",sep="")) # loads: LD, NET, info
 
@@ -213,7 +219,7 @@ NET_all = NET_all[which(!is.na(m)),] # only keep SNPs present in GWAS to speed u
 m = m[which(!is.na(m))]
 
 sumstat.orgin = sumstat.orgin[m,]
-sum(is.na(sumstat.orgin))
+#sum(is.na(sumstat.orgin))
 
 a1 = sumstat.orgin[, "A1"]
 a2 = NET_all[, 1] # get gwas allele and allele used in TWAS/MWAS models
@@ -227,7 +233,8 @@ m2 = (a1 == a3)
 sign = as.numeric(m1 | m2);
 sign[which(sign == 0)] = -1
 
-sum(sign == -1)
+#sum(sign == -1)
+
 gwas_z = sumstat.orgin[, "Z"] * sign # transform gwas Z for non matching allele's
 
 gwas_snp = sumstat.orgin[, "SNP"]
@@ -244,10 +251,13 @@ colnames(out.res) <- c("CHR", "geneID", "ensembl", "P0", "P1", "n_enhancer", "n_
 
 res.single <- NULL
 
+cat("Number of Genes ",length(used.gene),"to be tested\n")
+
+cat("#########START#########\n")
 for (gene.indx in 1:length(used.gene)) {
     #length(used.gene)
     tryCatch({
-        #gene.indx = 10
+        #gene.indx = 74
         # Load in summary stats
         start.time <- proc.time()[3]
         wgtlist1 <- wgtlist[wgtlist[, "geneID"] == used.gene[gene.indx],]
@@ -293,7 +303,9 @@ for (gene.indx in 1:length(used.gene)) {
         ensembl.id = unique(wgtlist1[,"ensembl"])
         ensembl.id = ensembl.id[!is.na(ensembl.id)]
         
+        #if(gene.indx %%20 ==0) {
         cat("Finish Gene",gene.indx," ",ensembl.id,"\n")
+        #}
         
         end.time <- proc.time()[3]
         run.time <- (end.time - start.time)
@@ -317,4 +329,6 @@ out.file <- paste(outd, "/res_MWAS_CHR", job, ".txt", sep = "")
 write.table(res.single,out.file,quote=FALSE, row.names=FALSE,col.names=TRUE)
 
 
-
+cat("The CMO job has been finished successfully\n")
+cat("The results are stored in ",outd,"\n")
+cat("Thank you for using CMO. If you have questions, please feel free to contact Chong Wu (cwu3@fsu.edu).")

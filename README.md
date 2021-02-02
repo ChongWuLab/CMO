@@ -2,15 +2,24 @@
 
 CMO is a gene-level association test that can identify many significant and novel genes ignored by many benchmark methods.  Specifically,  CMO integrates genetically regulated DNAm in enhancers, promoters, and the gene body to identify additional disease-associated genes. Please cite the following manuscript for CMO analysis:
 
->  Wu et al. A gene-level methylome-wide association analysis identifies novel Alzheimer's disease genes. bioRxiv. doi:https://doi.org/10.1101/2020.07.13.201376. 
+>  Wu et al. A gene-level methylome-wide association analysis identifies novel Alzheimer's disease genes. Bioinformatics (Accepted) doi:https://doi.org/10.1101/2020.07.13.201376. 
 
 In this repo, we provide the following sources.
 
-* CMO: the software for running CMO test
+* CMO: the software for running the CMO test
 
-* Codes: all source codes for replicating the results present in the manuscript.
+* Codes: all source codes for replicating the results present in the manuscript
 
-  
+
+
+
+### Updates
+
+1. Version 1.0: the preliminary release
+2. Version 2.0: the standard alone release. We expect any graduate students can run the software smoothly. It should take less than one hour to learn and configure the software.
+3. Version 2.1: fix some bugs and add more comments
+
+
 
 ## Outline
 
@@ -31,12 +40,22 @@ In this repo, we provide the following sources.
   cd CMO-1.0
   ~~~
 
-- Download and unzip the [constructed weights](). (The link will be available after the manuscript has been accepted.)
+- Download and unzip the constructed weights. Download through [this link]() or by the following commands. Briefly, we generated weights by leveraging the following two resources: [GeneHancer](https://genecards.weizmann.ac.il/geneloc_prev/index.shtml) and [Baselmans, B., *et al.* (2018)](http://bbmri.researchlumc.nl/atlas/#data).
+
+  ~~~
+  wget https://github.com/ChongWuLab/CMO/archive/v1.0.zip
+  unzip v1.0.zip
+  cd CMO-1.0
+  ~~~
+
+  
 
 
 ## <a name="Analysis"></a>Typical analysis and output
 
-The CMO analysis takes pre-computed DNA methylation prediction models (included in the CMO package), enhancer-promoter interactions (included in the CMO package), and GWAS summary data to estimate the association between a gene and the trait of interest. We will use the [IGAP Alzheimer's summary data](http://web.pasteur-lille.fr/en/recherche/u744/igap/igap_download.php) (Lambert et al. 2013) as an example to illustrate how to use our methods. This example assumes you have set up the required environment and data, as illustrated in the previous section.
+The CMO analysis takes pre-computed DNA methylation prediction models (included in the CMO package), enhancer-promoter interactions (included in the CMO package), and GWAS summary data to estimate the association between a gene and the trait of interest. We will use the [IGAP Alzheimer's summary data](http://web.pasteur-lille.fr/en/recherche/u744/igap/igap_download.php) (Lambert et al. 2013) as an example to illustrate how to use our methods. This example assumes you have set up the required environment and data, as illustrated in the previous section. 
+
+To help users better use our software, we provided [a detailed pipeline]() for running CMO with [COVID19-hg GWAS meta-analyses round 5 data](https://www.covid19hg.org/results/).
 
 ### Input: GWAS summary statistics
 
@@ -94,6 +113,11 @@ The results are stored in a user-defined output file. For illustration, we expla
 If you have questions, please submit an issue. We will summarize commonly asked questions here. 
 
 
+
+## Fucute updates
+
+1. The current version (2.1) only supports parallel in chromosomes. It runs smoothly on our own server and takes about ten minutes for a typical run. We will support parallel within each chromosome in the next version to further speed up.
+2. Please send us an email ([cwu3@fsu.edu](mailto:cwu3@fsu.edu)) for any new feature request.
 
 ## License
 

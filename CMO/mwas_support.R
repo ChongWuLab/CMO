@@ -51,6 +51,9 @@ SMWAS.sum <- function(wgtlist0, opt) {
             }
         }
         res.save = res.save[!is.na(res.save[, 1]),,drop=FALSE]
+        if(dim(res.save)[1]==0) {
+            next
+        }
         res.save$feature = wgtlist0[w, 2]
         
         if (wgtlist0[w, 2] == "GeneBody") {
