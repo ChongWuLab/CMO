@@ -53,7 +53,7 @@ In this repo, we provide the following sources.
 
 The CMO analysis takes pre-computed DNA methylation prediction models (included in the CMO package), enhancer-promoter interactions (included in the CMO package), and GWAS summary data to estimate the association between a gene and the trait of interest. We will use the [IGAP Alzheimer's summary data](http://web.pasteur-lille.fr/en/recherche/u744/igap/igap_download.php) (Lambert et al. 2013) as an example to illustrate how to use our methods. This example assumes you have set up the required environment and data, as illustrated in the previous section. 
 
-To help users better use our software, we provided [a detailed pipeline]() for running CMO with [COVID19-hg GWAS meta-analyses round 5 data](https://www.covid19hg.org/results/).
+To help users better use our software, we provided [a detailed pipeline]() for running CMO with [COVID19-hg GWAS meta-analyses round 5 data](https://www.covid19hg.org/results/). *We will provide this pipeline within two weeks.*
 
 ### Input: GWAS summary statistics
 
