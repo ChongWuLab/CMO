@@ -16,7 +16,7 @@ In this repo, we provide the following sources.
 ### Updates
 
 1. Version 1.0: the preliminary release
-2. Version 2.0: the standard alone release. We expect any graduate students can run the software smoothly. It should take less than one hour to learn and configure the software.
+2. Version 2.0: the standard alone release. It should take less than one hour to learn and configure the software.
 3. Version 2.1: fix some bugs and add more comments
 
 
@@ -35,19 +35,17 @@ In this repo, we provide the following sources.
 - Download and unpackage the CMO package from GitHub. Download through [this link](https://github.com/ChongWuLab/CMO/releases/tag/v1.0) or by the following commands:
 
   ~~~
-  wget https://github.com/ChongWuLab/CMO/archive/v1.0.zip
-  unzip v1.0.zip
-  cd CMO-1.0
+  wget https://github.com/ChongWuLab/CMO/archive/v2.1.zip
+  unzip v2.1.zip
+  cd CMO-2.1
   ~~~
 
-- Download and unzip the constructed weights. Download through [this link]() or by the following commands. Briefly, we generated weights by leveraging the following two resources: [GeneHancer](https://genecards.weizmann.ac.il/geneloc_prev/index.shtml) and [Baselmans, B., *et al.* (2018)](http://bbmri.researchlumc.nl/atlas/#data).
+- Download and unzip the constructed weights. Download through [this link]() or by the following commands. Briefly, we generated weights by leveraging the following two resources: [GeneHancer](https://genecards.weizmann.ac.il/geneloc_prev/index.shtml) and [Baselmans, B., *et al.* (2018)](http://bbmri.researchlumc.nl/atlas/#data). *Due to the pandemic, I am unable to upload the weights file. However, I will upload it by Feb 3. Please do check beack later.*
 
   ~~~
-  wget https://github.com/ChongWuLab/CMO/archive/v1.0.zip
-  unzip v1.0.zip
-  cd CMO-1.0
+  
   ~~~
-
+  
   
 
 
