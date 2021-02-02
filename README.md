@@ -32,7 +32,7 @@ In this repo, we provide the following sources.
 
 ## <a name="Installation"></a>Installation
 
-- Download and unpackage the CMO package from GitHub. Download through [this link](https://github.com/ChongWuLab/CMO/releases/tag/v1.0) or by the following commands:
+- Download and unpackage the CMO package from GitHub. Download through [this link](https://github.com/ChongWuLab/CMO/releases/tag/V2.1) or by the following commands:
 
   ~~~
   wget https://github.com/ChongWuLab/CMO/archive/v2.1.zip
