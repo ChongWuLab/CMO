@@ -1,5 +1,7 @@
 # Cross Methylome Omnibus (CMO) test
 
+#### `https://zenodo.org/badge/DOI/10.5281/zenodo.4475935.svg`
+
 CMO is a gene-level association test that can identify many significant and novel genes ignored by many benchmark methods.  Specifically,  CMO integrates genetically regulated DNAm in enhancers, promoters, and the gene body to identify additional disease-associated genes. Please cite the following manuscript for CMO analysis:
 
 >  Wu et al. A gene-level methylome-wide association analysis identifies novel Alzheimer's disease genes. Bioinformatics doi:https://doi.org/10.1093/bioinformatics/btab045
@@ -40,12 +42,8 @@ In this repo, we provide the following sources.
   cd CMO-2.1
   ~~~
 
-- Download and unzip the constructed weights. Download through [this link]() or by the following commands. Briefly, we generated weights by leveraging the following two resources: [GeneHancer](https://genecards.weizmann.ac.il/geneloc_prev/index.shtml) and [Baselmans, B., *et al.* (2018)](http://bbmri.researchlumc.nl/atlas/#data). *Due to the pandemic, I am unable to upload the weights file. However, I will upload it by Feb 3. Please do check beack later.*
+- Download and unzip the constructed weights. Download through [this link](https://doi.org/10.5281/zenodo.4475935). Briefly, we generated weights by leveraging the following two resources: [GeneHancer](https://genecards.weizmann.ac.il/geneloc_prev/index.shtml) and [Baselmans, B., *et al.* (2018)](http://bbmri.researchlumc.nl/atlas/#data).
 
-  ~~~
-  
-  ~~~
-  
   
 
 
