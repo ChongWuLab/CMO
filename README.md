@@ -1,6 +1,8 @@
 # Cross Methylome Omnibus (CMO) test
 
-#### `https://zenodo.org/badge/DOI/10.5281/zenodo.4475935.svg`
+```
+[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.4475935.svg)](https://doi.org/10.5281/zenodo.4475935)
+```
 
 CMO is a gene-level association test that can identify many significant and novel genes ignored by many benchmark methods.  Specifically,  CMO integrates genetically regulated DNAm in enhancers, promoters, and the gene body to identify additional disease-associated genes. Please cite the following manuscript for CMO analysis:
 
