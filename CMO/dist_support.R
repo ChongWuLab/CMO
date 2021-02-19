@@ -104,9 +104,12 @@ ACAT<-function(Pvals,Weights=NULL){
         stop("P-values must be between 0 and 1!")
     }
     #### check if there are pvals that are either exactly 0 or 1.
-    
+    Pvals = Pvals[Pvals!=1]
+
     is.zero<-(sum(Pvals==0)>=1)
     is.one<-(sum(Pvals==1)>=1)
+    
+    
     if (is.zero && is.one){
         #stop("Cannot have both 0 and 1 p-values!")
         return(-1)
