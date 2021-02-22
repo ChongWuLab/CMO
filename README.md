@@ -35,12 +35,12 @@ In this repo, we provide the following sources.
 
 ## <a name="Installation"></a>Installation
 
-- Download and unpackage the CMO package from GitHub. Download through [this link](https://github.com/ChongWuLab/CMO/releases/tag/V2.1) or by the following commands:
+- Download and unpackage the CMO package from GitHub. Download through [this link](https://github.com/ChongWuLab/CMO/releases/download/V2.1/CMO.zip) or by the following commands:
 
   ~~~
-  wget https://github.com/ChongWuLab/CMO/archive/v2.1.zip
-  unzip v2.1.zip
-  cd CMO-2.1
+  wget https://github.com/ChongWuLab/CMO/releases/download/V2.1/CMO.zip
+  unzip CMO.zip
+  cd CMO
   ~~~
 
 - Download and unzip the constructed weights. Download through [this link](https://doi.org/10.5281/zenodo.4475935). Briefly, we generated weights by leveraging the following two resources: [GeneHancer](https://genecards.weizmann.ac.il/geneloc_prev/index.shtml) and [Baselmans, B., *et al.* (2018)](http://bbmri.researchlumc.nl/atlas/#data).
