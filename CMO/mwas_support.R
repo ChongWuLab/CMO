@@ -39,6 +39,7 @@ SMWAS.sum <- function(wgtlist0, opt) {
                 
                 gwasp.used = pnorm(abs(gwasz.used),lower.tail=F) * 2
                 used.weight = abs(weight)/ sum(abs(weight))
+                used.weight = as.vector(used.weight)
                 pACAT = ACAT(gwasp.used,used.weight)
                 
                 paSumSSU <- ACAT(c(pSUM, pSSU), c(1 / 2, 1 / 2))

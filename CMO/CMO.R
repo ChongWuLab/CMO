@@ -30,7 +30,7 @@ cat("Start runining CMO for chromosome ",opt$chr_id,"\n")
 cat("Input summary data: ",opt$sumstats,"\n")
 
 opt$chr_id = as.numeric(opt$chr_id)
-#opt = list(sumstats = "/gpfs/research/chongwu/shared/summary_statistics/COVID19/release5/processed/ANA_C2_eur_V5.txt",out = "/gpfs/research/chongwu/Chong/Application/COVID19/C2_eur_V5", weights_dir = "/gpfs/research/chongwu/Chong/MWAS/WEIGHTS/",chr_id =7)
+#opt = list(sumstats = "/gpfs/research/chongwu/shared/summary_statistics/COVID19/release5/processed/ANA_B1_eur_V5.txt",out = "/gpfs/research/chongwu/Chong/Application/COVID19/B1_eur_V5", weights_dir = "/gpfs/research/chongwu/Chong/MWAS/WEIGHTS/",chr_id =3)
 
 
 gene = readRDS("processed_gene_CpG_mapped_inf.rds") #17296 genes
@@ -257,7 +257,7 @@ cat("#########START#########\n")
 for (gene.indx in 1:length(used.gene)) {
     #length(used.gene)
     tryCatch({
-        #gene.indx = 74
+        #gene.indx = 3
         # Load in summary stats
         start.time <- proc.time()[3]
         wgtlist1 <- wgtlist[wgtlist[, "geneID"] == used.gene[gene.indx],]

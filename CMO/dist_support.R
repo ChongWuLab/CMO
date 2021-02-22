@@ -94,61 +94,68 @@ PowerUniv <- function(U,V){
 
 ## Copyright: https://github.com/yaowuliu/ACAT/blob/master/R/ACAT.R
 ## Slightly modified
-ACAT<-function(Pvals,Weights=NULL){
-    #### check if there is NA
-    if (sum(is.na(Pvals))>0){
-        stop("Cannot have NAs in the p-values!")
-    }
-    #### check if Pvals are between 0 and 1
-    if ((sum(Pvals<0)+sum(Pvals>1))>0){
-        stop("P-values must be between 0 and 1!")
-    }
-    #### check if there are pvals that are either exactly 0 or 1.
-    Pvals = Pvals[Pvals!=1]
+ACAT <- function(Pvals,weights=NULL,is.check=TRUE){
+    Pvals<-as.matrix(Pvals)
+    if (is.check){
+        #### check if there is NA
+        if (sum(is.na(Pvals))>0){
+            stop("Cannot have NAs in the p-values!")
+        }
+        #### check if Pvals are between 0 and 1
+        if ((sum(Pvals<0)+sum(Pvals>1))>0){
+            stop("P-values must be between 0 and 1!")
+        }
+        #### check if there are pvals that are either exactly 0 or 1.
+        is.zero<-(colSums(Pvals==0)>=1)
+        is.one<-(colSums(Pvals==1)>=1)
+        if (sum((is.zero+is.one)==2)>0){
+            stop("Cannot have both 0 and 1 p-values in the same column!")
+        }
 
-    is.zero<-(sum(Pvals==0)>=1)
-    is.one<-(sum(Pvals==1)>=1)
-    
-    
-    if (is.zero && is.one){
-        #stop("Cannot have both 0 and 1 p-values!")
-        return(-1)
-    }
-    if (is.zero){
-        return(0)
-    }
-    
-    if (is.one){
-        #warning("There are p-values that are exactly 1!")
-        return(1)
+        if (sum(is.zero)>0){
+            warning("There are p-values that are exactly 0!")
+        }
+        if (sum(is.one)>0){
+            warning("There are p-values that are exactly 1!")
+        }
+
     }
     
     #### Default: equal weights. If not, check the validity of the user supplied weights and standadize them.
-    if (is.null(Weights)){
-        Weights<-rep(1/length(Pvals),length(Pvals))
-    }else if (length(Weights)!=length(Pvals)){
-        stop("The length of weights should be the same as that of the p-values")
-    }else if (sum(Weights<0)>0){
-        stop("All the weights must be positive!")
+    if (is.null(weights)){
+        is.weights.null<-TRUE
     }else{
-        Weights<-Weights/sum(Weights)
+        is.weights.null<-FALSE
+        weights<-as.matrix(weights)
+        if (sum(dim(weights)!=dim(Pvals))>0){
+            stop("The dimensions of weights and Pvals must be the same!")
+        }else if (is.check & (sum(weights<0)>0)){
+            stop("All the weights must be nonnegative!")
+        }else{
+            w.sum<-colSums(weights)
+            if (sum(w.sum<=0)>0){
+                stop("At least one weight should be positive in each column!")
+            }else{
+                for (j in 1:ncol(weights)){
+                    weights[,j]<-weights[,j]/w.sum[j]
+                }
+            }
+        }
+
     }
-    
-    
-    #### check if there are very small non-zero p values
-    is.small<-(Pvals<1e-16)
-    if (sum(is.small)==0){
-        cct.stat<-sum(Weights*tan((0.5-Pvals)*pi))
+
+    #### check if there are very small non-zero p values and calcuate the cauchy statistics
+    is.small<-(Pvals<1e-15)
+    if (is.weights.null){
+         Pvals[!is.small]<-tan((0.5-Pvals[!is.small])*pi)
+         Pvals[is.small]<-1/Pvals[is.small]/pi
+         cct.stat<-colMeans(Pvals)
     }else{
-        cct.stat<-sum((Weights[is.small]/Pvals[is.small])/pi)
-        cct.stat<-cct.stat+sum(Weights[!is.small]*tan((0.5-Pvals[!is.small])*pi))
+         Pvals[!is.small]<-weights[!is.small]*tan((0.5-Pvals[!is.small])*pi)
+         Pvals[is.small]<-(weights[is.small]/Pvals[is.small])/pi
+         cct.stat<-colSums(Pvals)
     }
-    
-    #### check if the test statistic is very large.
-    if (cct.stat>1e+15){
-        pval<-(1/cct.stat)/pi
-    }else{
-        pval<-pcauchy(cct.stat,lower.tail=F)
-    }
+    #### return the ACAT p value(s).
+    pval<-pcauchy(cct.stat,lower.tail = F)
     return(pval)
 }
